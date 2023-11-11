@@ -1,6 +1,6 @@
 <?php
 /** The name of the database*/
-define( 'DB_NAME', 'db_quanlysanpham' );
+define( 'DB_NAME', 'db_sokkimthanh' );
 /** MySQL database username */
 define( 'DB_USER', 'root' );
 /** MySQL database password */
@@ -17,5 +17,3 @@ define( 'DB_CHARSET', 'utf8' );
 // Read (Select)
 // Update (Update)
 // Delete (Delete)
-
-?>

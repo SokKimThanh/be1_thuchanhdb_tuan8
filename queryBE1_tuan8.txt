@@ -1,0 +1,202 @@
+-- phpMyAdmin SQL Dump
+-- version 4.8.5
+-- https://www.phpmyadmin.net/
+--
+-- Máy chủ: localhost
+-- Thời gian đã tạo: Th10 09, 2023 lúc 11:48 AM
+-- Phiên bản máy phục vụ: 5.7.25
+-- Phiên bản PHP: 7.1.26
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Cơ sở dữ liệu: `db_quanlyhanghoa`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `manufactures`
+--
+
+CREATE TABLE `manufactures` (
+  `manu_id` int(11) NOT NULL,
+  `manu_name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='bảng hãng sản xuất';
+
+--
+-- Đang đổ dữ liệu cho bảng `manufactures`
+--
+
+INSERT INTO `manufactures` (`manu_id`, `manu_name`) VALUES
+(1000001, 'microsoft'),
+(1000002, 'apple'),
+(1000003, 'samsung'),
+(1000004, 'google'),
+(1000005, 'dell');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `products`
+--
+
+CREATE TABLE `products` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `manu_id` int(11) NOT NULL,
+  `type_id` int(11) NOT NULL,
+  `price` int(11) DEFAULT NULL,
+  `pro_image` varchar(150) NOT NULL,
+  `description` text,
+  `feature` tinyint(4) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Bảng sản phẩm';
+
+--
+-- Đang đổ dữ liệu cho bảng `products`
+--
+
+INSERT INTO `products` (`id`, `name`, `manu_id`, `type_id`, `price`, `pro_image`, `description`, `feature`, `created_at`) VALUES
+(1, 'Surface Headphones', 1000001, 1000001, 250, 'surface_headphones.jpg', 'Tai nghe chất lượng cao từ Microsoft', 1, '2023-11-09 11:48:31'),
+(2, 'iPad Pro', 1000002, 1000002, 800, 'ipad_pro.jpg', 'Máy tính bảng mạnh mẽ từ Apple', 0, '2023-11-09 11:48:31'),
+(3, 'Galaxy S21', 1000003, 1000003, 700, 'galaxy_s21.jpg', 'Điện thoại thông minh hàng đầu từ Samsung', 1, '2023-11-09 11:48:31'),
+(4, 'Pixelbook Go', 1000004, 1000004, 650, 'pixelbook_go.jpg', 'Laptop nhẹ nhàng từ Google', 0, '2023-11-09 11:48:31'),
+(5, 'XPS Desktop', 1000005, 1000005, 650, 'xps_desktop.jpg', 'Máy tính để bàn mạnh mẽ từ Dell', 1, '2023-11-09 11:48:31'),
+(6, 'Surface Pro', 1000001, 1000002, 1000, 'surface_pro.jpg', 'Máy tính bảng mạnh mẽ từ Microsoft', 0, '2023-11-09 11:48:31'),
+(7, 'AirPods Pro', 1000002, 1000001, 250, 'airpods_pro.jpg', 'Tai nghe chất lượng cao từ Apple', 1, '2023-11-09 11:48:31'),
+(8, 'Galaxy Tab S7', 1000003, 1000002, 650, 'galaxy_tab_s7.jpg', 'Máy tính bảng mạnh mẽ từ Samsung', 0, '2023-11-09 11:48:31'),
+(9, 'Pixel Buds', 1000004, 1000001, 180, 'pixel_buds.jpg', 'Tai nghe chất lượng cao từ Google', 1, '2023-11-09 11:48:31'),
+(10, 'XPS 13', 1000005, 1000004, 1000, 'xps_13.jpg', 'Laptop mạnh mẽ từ Dell', 0, '2023-11-09 11:48:31');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `protypes`
+--
+
+CREATE TABLE `protypes` (
+  `type_id` int(11) NOT NULL,
+  `type_name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Bảng loại sản phẩm';
+
+--
+-- Đang đổ dữ liệu cho bảng `protypes`
+--
+
+INSERT INTO `protypes` (`type_id`, `type_name`) VALUES
+(1000001, 'Tai nghe'),
+(1000002, 'máy tính bảng'),
+(1000003, 'Điện thoại'),
+(1000004, 'Laptop'),
+(1000005, 'PC');
+
+--
+-- Chỉ mục cho các bảng đã đổ
+--
+
+--
+-- Chỉ mục cho bảng `manufactures`
+--
+ALTER TABLE `manufactures`
+  ADD PRIMARY KEY (`manu_id`);
+
+--
+-- Chỉ mục cho bảng `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `protypes`
+--
+ALTER TABLE `protypes`
+  ADD PRIMARY KEY (`type_id`);
+
+--
+-- AUTO_INCREMENT cho các bảng đã đổ
+--
+
+--
+-- AUTO_INCREMENT cho bảng `manufactures`
+--
+ALTER TABLE `manufactures`
+  MODIFY `manu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1000006;
+
+--
+-- AUTO_INCREMENT cho bảng `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT cho bảng `protypes`
+--
+ALTER TABLE `protypes`
+  MODIFY `type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1000006;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+1. Lấy ra các cột ID, name, price, image, description trong bảng products:
+```php
+$query = "SELECT ID, name, price, image, description FROM products";
+```
+
+2. Lấy ra sản phẩm có id = 10:
+```php
+$query = "SELECT * FROM products WHERE id = 10";
+```
+
+3. Lấy ra các sản phẩm có type_id = 1:
+```php
+$query = "SELECT * FROM products WHERE type_id = 1";
+```
+
+4. Lấy ra các sản phẩm có tên hãng manu_name là “Apple":
+```php
+$query = "SELECT * FROM products WHERE manu_name = 'Apple'";
+```
+
+5. Lấy ra 10 sản phẩm mới nhất:
+```php
+$query = "SELECT * FROM products ORDER BY created_at DESC LIMIT 10";
+```
+
+6. Lấy ra 10 sản phẩm tiếp theo 10 sản phẩm mới nhất:
+```php
+$query = "SELECT * FROM products ORDER BY created_at DESC LIMIT 10 OFFSET 10";
+```
+
+7. Lấy ra tất cả sản phẩm mà nội dung có chứa từ khoá “128GB":
+```php
+$query = "SELECT * FROM products WHERE description LIKE '%128GB%'";
+```
+
+8. Xóa sản phẩm có id=10 trong bảng products:
+```php
+$query = "DELETE FROM products WHERE id = 10";
+```
+
+9. Thêm 1 sản phẩm (giả sử sản phẩm có id=20, name='Product 20', price=50000, image='image.jpg', description='This is product 20'):
+```php
+$query = "INSERT INTO products (id, name, price, image, description) VALUES (20, 'Product 20', 50000, 'image.jpg', 'This is product 20')";
+```
+
+10. Sửa giá của sản phẩm có id=11 thành 899,000 VND:
+```php
+$query = "UPDATE products SET price = 899000 WHERE id = 11";
+```
+
+ 
