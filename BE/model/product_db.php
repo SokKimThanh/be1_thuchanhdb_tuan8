@@ -178,7 +178,7 @@ class Product_DB extends Db
             throw new Exception("Thực thi sql không thành công!" . $sql->error);
             return;
         }
-
+        
         // proceed only if a query is executed
         if ($result = $sql->get_result()) {
             while ($row = $result->fetch_assoc()) {

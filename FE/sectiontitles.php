@@ -5,7 +5,13 @@ $protypeList = $protypeDB->getList();
 ?>
 <div class="col-md-12">
     <div class="section-title">
-        <h3 class="title">New Products</h3>
+        <h3 class="title"><?php
+            if(isset($_GET['search'])) {
+                echo "Search Item";
+            }else{
+                echo "New Products";
+            }
+        ?></h3>
         <div class="section-nav">
             <ul class="section-tab-nav tab-nav">
                 <?php

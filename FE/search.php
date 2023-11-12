@@ -42,7 +42,7 @@ $listSearchByName = $productDB->getProducts();
 								<div class="products-slick" data-nav="#slick-nav-1">
 									<!-- product -->
 									<?php
-									foreach ($productNews as $key => $value) {
+									foreach ($listSearchByName as $key => $value) {
 										echo "<div class='product'>
 										<div class='product-img'>
 											<img src='./img/{$value['pro_image']}' alt=''>
