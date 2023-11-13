@@ -1,13 +1,15 @@
 <?php
+// khai bao
+
+$search =  isset($_GET['search']) ? $_GET['search'] : "";
+
+// khai bao 2
 include_once('../BE/model/product_db.php');
 $productDB = new Product_DB();
-$productNews = $productDB->selectNewsLimit(10);
-
-
-$search =  isset($_GET['search']) ? $_GET['search'] : '';
-
 $productDB->searchByName($search);
 $listSearchByName = $productDB->getProducts();
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +40,9 @@ $listSearchByName = $productDB->getProducts();
 					<div class="row">
 						<div class="products-tabs">
 							<!-- tab -->
-							<div id="tab1" class="tab-pane active">
+							<!-- ../FE/index.php?type_id={$value["type_id"]}#tab{$value["type_id"]} -->
+							<div id='tab<?php echo $type_id ?>' class="tab-pane active">
+								<?php echo $type_id ?>
 								<div class="products-slick" data-nav="#slick-nav-1">
 									<!-- product -->
 									<?php
@@ -48,7 +52,7 @@ $listSearchByName = $productDB->getProducts();
 											<img src='./img/{$value['pro_image']}' alt=''>
 										</div>
 										<div class='product-body'>
-											<p class='product-category'>Category</p>
+											<p class='product-category'>{$value['type_name']}</p>
 											<h3 class='product-name'><a href='#'>{$value['name']}</a></h3>
 											<h4 class='product-price'>$ {$value['price']} <del class='product-old-price'>$ {$value['price']}</del></h4>
 										</div>

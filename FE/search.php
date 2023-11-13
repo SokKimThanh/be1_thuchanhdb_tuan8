@@ -1,7 +1,7 @@
 <?php
 include_once('../BE/model/product_db.php');
 $productDB = new Product_DB();
-$productNews = $productDB->selectNewsLimit(10);
+$productNews = $productDB->selectNewsLimit(10, $_GET['type_id']);
 
 
 $search =  isset($_GET['search']) ? $_GET['search'] : '';

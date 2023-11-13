@@ -114,10 +114,10 @@ class Product_DB extends Db
     /**
      * 5 select new 10 
      */
-    public function selectNewsLimit($limit)
+    public function selectNewsLimit($limit, $type_id)
     {
-        $sql = self::$connection->prepare("SELECT * FROM products order by created_at desc limit ?");
-        $sql->bind_param("i", $limit);
+        $sql = self::$connection->prepare("SELECT * FROM products as pd, protypes as pt where pd.type_id = pt.type_id and pt.type_id = ? order by pd.created_at desc limit ?");
+        $sql->bind_param("ii", $type_id, $limit);
         if (!$sql->execute()) {
             throw new Exception("Thực thi sql không thành công!" . $sql->error);
             return;
@@ -178,7 +178,7 @@ class Product_DB extends Db
             throw new Exception("Thực thi sql không thành công!" . $sql->error);
             return;
         }
-        
+
         // proceed only if a query is executed
         if ($result = $sql->get_result()) {
             while ($row = $result->fetch_assoc()) {
@@ -306,7 +306,7 @@ $product_db = new Product_DB();
 // print_r($products);
 
 // cau 5: 
-// $product_db->selectLimit(1);
+// $product_db->selectNewsLimit(1, 1000001);
 // $product_db->Xuat();
 
 // cau 6: paginator
