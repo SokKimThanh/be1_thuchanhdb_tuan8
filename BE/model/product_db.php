@@ -116,8 +116,12 @@ class Product_DB extends Db
      */
     public function selectNewsLimit($limit, $type_id)
     {
-        $sql = self::$connection->prepare("SELECT * FROM products as pd, protypes as pt where pd.type_id = pt.type_id and pt.type_id = ? order by pd.created_at desc limit ?");
-        $sql->bind_param("ii", $type_id, $limit);
+        $select = "SELECT *";
+        $from = "FROM products as pd, protypes as pt";
+        $where = "WHERE pd.type_id = pt.type_id and pd.type_id = $type_id";
+        $orderby = "ORDER BY pd.created_at desc LIMIT $limit";
+
+        $sql = self::$connection->prepare("$select $from $where $orderby");
         if (!$sql->execute()) {
             throw new Exception("Thực thi sql không thành công!" . $sql->error);
             return;
@@ -130,7 +134,6 @@ class Product_DB extends Db
                 $products->add($row);
             }
         }
-
         $sql->close();
         return $products->getList();
     }
@@ -161,31 +164,39 @@ class Product_DB extends Db
     /**
      * 7 Chức năng tìm kiếm
      */
-    public function searchByName($name)
+    public function searchByName($keyword, $type_id)
     {
-        // khai bao
-        $ten = "%" . $name . "%";
-        $string = "SELECT * FROM `products` WHERE `name` LIKE ?";
+        // khai bao 
+        $select = "SELECT *";
+        $from = "FROM products as pd, protypes as pt";
+        $where = "WHERE pd.type_id = pt.type_id";
 
+        $findById = "";
+        $findByKeyword = "";
+        if ($keyword != "") {
+            $findByKeyword = "and pd.name LIKE N'%$keyword%'";
+        }
+        if ($type_id != -1) {
+            $findById = "and pd.type_id = $type_id";
+        }
+        // var_dump("$select $from $where $findByKeyword $findById");
         // mo ket noi 
-        $sql = self::$connection->prepare($string);
-
-        // bind param with add value
-        $sql->bind_param("s", $ten);
+        $sql = self::$connection->prepare("$select $from $where $findByKeyword $findById");
 
         // exec sql
         if (!$sql->execute()) {
             throw new Exception("Thực thi sql không thành công!" . $sql->error);
             return;
         }
-
+        $list = array();
         // proceed only if a query is executed
         if ($result = $sql->get_result()) {
             while ($row = $result->fetch_assoc()) {
-                $this->products->add($row);
+                $list[] = $row;
             }
         }
         $sql->close();
+        return $list;
     }
 
     /**

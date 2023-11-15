@@ -30,20 +30,50 @@ class Protypes_DB extends Db
     }
     public function selectAll()
     {
-        $sql = self::$connection->prepare("Select * from protypes");
+        $sql = self::$connection->prepare("SELECT * from protypes");
         $sql->execute();
         if (!$sql->execute()) {
             throw new Exception("Thực thi sql không thành công!" . $sql->error);
             return;
         }
-
+        $list = array();
         // proceed only if a query is executed
         if ($result = $sql->get_result()) {
             while ($row = $result->fetch_assoc()) {
-                $this->list->add($row);
+                $list[] = $row;
             }
         }
         $sql->close();
+        return $list;
+    }
+    public function InDanhSachLoaiSanPham($url, $type_id)
+    {
+        $protypeList = $this->selectAll();
+        $result = "";
+        foreach ($protypeList as $key => $value) {
+            if ($value['type_id'] != $type_id) {
+                echo "<li><a href='{$_SERVER['PHP_SELF']}?type_id={$value['type_id']}'>{$value['type_name']}</a></li>";
+            } else {
+                echo "<li class='active'><a href='{$_SERVER['PHP_SELF']}?type_id={$value['type_id']}'>{$value['type_name']}</a></li>";
+            }
+        }
+        return $result;
+    }
+    public function InDanhSachLoaiSanPhamTimKiem($type_id)
+    {
+        $protypeList = $this->selectAll();
+        $result = "";
+
+        foreach ($protypeList as $key => $value) {
+            if ($value['type_id'] == $type_id && $type_id == -1) {
+                $result .= "<option selected value='{$value['type_id']}'>{$value['type_name']}</option>";
+            } else if ($value['type_id'] == $type_id) {
+                $result .= "<option selected value='{$value['type_id']}'>{$value['type_name']}</option>";
+            } else {
+                $result .= "<option value='{$value['type_id']}'>{$value['type_name']}</option>";
+            }
+        }
+        return $result;
     }
 }
 // $protype_db = new Protypes_DB();

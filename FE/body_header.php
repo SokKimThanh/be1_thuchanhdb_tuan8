@@ -1,7 +1,7 @@
 <?php
 include_once('../BE/model/protypes_db.php');
 $protypeDB = new Protypes_DB();
-$protypeList = $protypeDB->getList();
+$protypeList = $protypeDB->selectAll();
 
 ?>
 <!-- HEADER -->
@@ -41,16 +41,13 @@ $protypeList = $protypeDB->getList();
                 <!-- SEARCH BAR -->
                 <div class="col-md-6">
                     <div class="header-search">
-                        <form action="search.php" method="get">
-                            <select class="input-select">
-                                <option value="-1">All Categories</option>
+                        <form action="search.php">
+                            <select name="type_id" class="input-select">
                                 <?php
-                                foreach ($protypeList as $key => $value) {
-                                    echo "<option value='{$key}'>{$value['type_name']}</option>";
-                                }
+                                echo $protypeDB->InDanhSachLoaiSanPhamTimKiem($type_id);
                                 ?>
                             </select>
-                            <input class="input" name="search" placeholder="Search here">
+                            <input class="input" name="keyword" placeholder="Search here">
                             <button type="submit" class="search-btn">Search</button>
                         </form>
                     </div>
